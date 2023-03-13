@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import GoogleImg from "../assets/img/google-logo-9827.png"
 import logo from "../assets/img/logo.png"
 import {useSelector, useDispatch} from "react-redux"
-//import { verify } from "../features/userSlice";
+import { refreshTokenSetup } from '../utils/refreshTokenSetup';
 const clientId = process.env.REACT_APP_CLIENT_ID
 
 
@@ -21,14 +21,14 @@ export default function Login(){
     gapi.load("client:auth2", () => {
       gapi.auth2.init({ clientId });
     });
-    
+    localStorage.getItem('tokenId')&&navigate('/')
   }, []);
 
   
   const onSuccess = (res) => { 
   localStorage.setItem('tokenId', res.tokenId.trim(' '))
+  refreshTokenSetup(res)
   navigate('/')
-  //refreshTokenSetup(res);
 };
 
 const onFailure = (res) => {

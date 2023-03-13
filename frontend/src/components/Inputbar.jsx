@@ -1,17 +1,16 @@
 import {
   AppBar,
   Toolbar,
-  Typography,
-  IconButton,
   InputBase,
   Fab
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import SendIcon from '@mui/icons-material/Send';
+import { useState } from 'react';
 
 
-const drawerWidth= 240;
+const drawerWidth= 300;
 
 const Input = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -44,47 +43,57 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    paddingLeft: `calc(1em + ${theme.spacing(0)})`,
+    paddingRight: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '60ch',
-    },
   },
 }));
 
 export default function InputBar(){
+  const [input, setInput] = useState();
+  
+  function handleChange(e) {
+    setInput(e.target.value)
+  }
+
   return(
  <AppBar position="fixed"
               sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          top: 'auto', bottom: 0
+          top: 'auto', bottom: 0, 
         }}
       >
-      <Toolbar>
-          <Input>
+      <Toolbar
+      sx={{
+        display:"flex"
+      }}
+      >
+          <Input
+          sx={{
+            flexGrow:1,
+            display:"flex"
+          }}
+          >
               <InputIconWrapper>
               <InsertEmoticonIcon />
             </InputIconWrapper>
             <StyledInputBase
+            sx={{
+              flexGrow:1
+            }}
               placeholder="Message"
               inputProps={{ 'aria-label': 'search' }}
+              value={input}
+              onChange={handleChange}
             />
           </Input>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-haspopup="true"
-            >
+            
             <Fab 
             size="small"
-            disableElevation
             >
             <SendIcon color="primary"/>
             </Fab>
-            </IconButton>
       </Toolbar>
   </AppBar>
     )

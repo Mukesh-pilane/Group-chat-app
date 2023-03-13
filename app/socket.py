@@ -6,7 +6,7 @@ socketio = SocketIO()
 @socketio.on('connect')
 def user_connect():
         print("Connected")
-        emit("connect",{"data":f"id: {request.sid} is connected"})
+        emit("sid",request.sid)
 @socketio.on('data')
 def handle_message(data):
     emit("data", {"data": data})

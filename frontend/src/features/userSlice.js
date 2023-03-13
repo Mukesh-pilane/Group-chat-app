@@ -8,7 +8,6 @@ export const verify = createAsyncThunk('user/verify', ()=>{
     }
     })
     .then((response) => { 
-        console.log(localStorage.getItem('tokenId').trim(' '))
       return {
               user: response.data.uinfo.name,
               profilePicture: response.data.uinfo.picture,
@@ -22,17 +21,22 @@ export const userSlice = createSlice({
     initialState :{
         user:null,
         profilePicture:null,
+        socketId: null,
         isLoading:null
     },
     reducers:{
         login: (state, action) => {
             state.user = action.payload.user;
-            state.profilePicture = action.payload.profilePicture
+            state.profilePicture = action.payload.profilePicture;
+        },
+        connected: (state, action) => {
+            state.socketId = action.payload.socketId;
         },
         logout: (state) => {
             state.user = null;
             state.profilePicture = null;
-            state.isLoading = null
+            state.socketId = null;
+            state.isLoading = null;
         }
     },
     extraReducers:{
@@ -50,7 +54,7 @@ export const userSlice = createSlice({
     }
 }) 
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, connected } = userSlice.actions;
 
 export const selectUser = (state) => state.user.user
 

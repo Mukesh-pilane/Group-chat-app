@@ -1,12 +1,11 @@
 import React from 'react';
 import {makeStyles} from '@mui/styles'
 import {Toolbar, CssBaseline, Box} from '@mui/material'
-import Navbar from './Navbar'
-import SideBar from "./Sidebar"
+import SideBar from "../containers/Sidebar"
 
 
 
-const drawerWidth =240;
+const drawerWidth =300;
 
 const useStyles = makeStyles((theme) => {
   return{
@@ -33,14 +32,10 @@ const useStyles = makeStyles((theme) => {
 
 
 
-const Layout = ({children}) =>{
+const Layout = ({children, handleDrawerToggle, mobileOpen}) =>{
   
   const classes = useStyles();
-  const [mobileOpen, setMobileOpen] = React.useState(false);
   
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
   
   
   
@@ -54,9 +49,7 @@ const Layout = ({children}) =>{
   
       <CssBaseline />
 
-      <Navbar drawerWidth={drawerWidth}
-      handleDrawerToggle={handleDrawerToggle}
-      />
+      
       
       <SideBar 
       mobileOpen={mobileOpen}
